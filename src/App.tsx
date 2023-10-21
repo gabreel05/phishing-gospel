@@ -14,23 +14,43 @@ interface ModalProps {
   content: ReactNode
 }
 
+interface WelcomeModalProps {
+  isOpen: boolean
+  closeModal: () => void
+}
+
 const data = loadEmails()
 
 export default function App() {
   const [emails, _] = useState(data)
   const [modalIsOpen, setModalIsOpen] = useState(false)
-  const [isChecked, setIsChecked] = useState(false)
+  const [badModalIsOpen, setBadModalIsOpen] = useState(false)
+  const [welcomeModalIsOpen, setWelcomeModalIsOpen] = useState(true)
+  const [isChecked, setIsChecked] = useState<Email[]>([])
 
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked)
+  const handleCheckboxChange = (email: Email) => {
+    if (isChecked.includes(email)) {
+      setIsChecked(value => value.filter(item => item !== email))
+      return
+    }
+    setIsChecked(value => [...value, email])
   }
 
   const openModal = () => {
-    setModalIsOpen(true)
+    const everyIsPhishing = isChecked.every(email => email.isPhishing)
+    everyIsPhishing ? setModalIsOpen(true) : setBadModalIsOpen(true)
   }
 
   const closeModal = () => {
     setModalIsOpen(false)
+  }
+
+  const closeBadModal = () => {
+    setBadModalIsOpen(false)
+  }
+
+  const closeWelcomeModal = () => {
+    setWelcomeModalIsOpen(false)
   }
 
   return (
@@ -40,15 +60,17 @@ export default function App() {
         <HeaderButton onClick={openModal}>Enviar</HeaderButton>
       </HeaderContainer>
       {emails.map((email, index) => (
-        <CardContainer>
-          <CardCheckbox checked={isChecked} onChange={handleCheckboxChange} />
-          <CardContent>
-            <CardTitle>{email.title}</CardTitle>
-            <CardAuthor>From: {email.author}</CardAuthor>
-            <CardBody>{email.body}</CardBody>
-          </CardContent>
-        </CardContainer>
+        <Card
+          key={email.id}
+          email={email}
+          isChecked={isChecked.includes(email)}
+          handleCheckboxChange={() => handleCheckboxChange(email)}
+        />
       ))}
+      <WelcomeModal
+        isOpen={welcomeModalIsOpen}
+        closeModal={closeWelcomeModal}
+      />
       <Modal
         isOpen={modalIsOpen}
         closeModal={closeModal}
@@ -59,12 +81,128 @@ export default function App() {
           </div>
         }
       />
+      <BadModal
+        isOpen={badModalIsOpen}
+        closeModal={closeBadModal}
+        content={
+          <div>
+            <h1 style={{ marginBottom: '20px' }}>Errou filhão!</h1>
+            <img src="faustão.jpg" alt="Fausto Silva" width={180} />
+          </div>
+        }
+      />
       <GlobalStyle />
     </div>
   )
 }
 
+interface Email {
+  id: number
+  title: string
+  author: string
+  body: string
+  isPhishing: boolean
+}
+
+interface CardProps {
+  isChecked: boolean
+  handleCheckboxChange: () => void
+  email: Email
+}
+
+function Card({ isChecked, handleCheckboxChange, email }: CardProps) {
+  return (
+    <CardContainer>
+      <CardCheckbox checked={isChecked} onChange={handleCheckboxChange} />
+      <CardContent>
+        <CardTitle>{email.title}</CardTitle>
+        <CardAuthor>From: {email.author}</CardAuthor>
+        <CardBody>{email.body}</CardBody>
+      </CardContent>
+    </CardContainer>
+  )
+}
+
+function WelcomeModal({ isOpen, closeModal }: WelcomeModalProps) {
+  return (
+    <ReactModal
+      isOpen={isOpen}
+      onRequestClose={closeModal}
+      contentLabel="Example Modal"
+      style={{
+        overlay: {
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          zIndex: 999,
+        },
+        content: {
+          border: 'none',
+          boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+          borderRadius: '8px',
+          maxWidth: '400px',
+          margin: 'auto',
+        },
+      }}
+    >
+      <ModalContainer>
+        <ModalCloseButton onClick={closeModal}>X</ModalCloseButton>
+        <h3>
+          Bem vindo(a) ao <strong>Phishing Gospel</strong>!
+        </h3>
+        <p>
+          Você receberá uma série de e-mails, sua missão é descobrir quais são
+          os e-mails de Phishing.
+        </p>{' '}
+        <br />
+        <p>
+          <strong>Phishing</strong> é um tipo de ataque de engenharia social
+          comumente utilizado para roubar dados pessoais, como senhas e
+          informações bancárias.
+        </p>{' '}
+        <br />
+        <p>
+          <strong>Engenharia social</strong> é uma técnica de manipulação
+          psicológica que explora a ingenuidade das pessoas para obter
+          informações confidenciais.
+        </p>{' '}
+        <br />
+        <p>
+          Mas nossos e-mails são um pouco diferentes... Cuidado com aqueles que
+          querem roubar não simplesmente seus dados, mas sua eternidade!
+        </p>
+      </ModalContainer>
+    </ReactModal>
+  )
+}
+
 function Modal({ isOpen, closeModal, content }: ModalProps) {
+  return (
+    <ReactModal
+      isOpen={isOpen}
+      onRequestClose={closeModal}
+      contentLabel="Example Modal"
+      style={{
+        overlay: {
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          zIndex: 999,
+        },
+        content: {
+          border: 'none',
+          boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+          borderRadius: '8px',
+          maxWidth: '400px',
+          margin: 'auto',
+        },
+      }}
+    >
+      <ModalContainer>
+        <ModalCloseButton onClick={closeModal}>X</ModalCloseButton>
+        {content}
+      </ModalContainer>
+    </ReactModal>
+  )
+}
+
+function BadModal({ isOpen, closeModal, content }: ModalProps) {
   return (
     <ReactModal
       isOpen={isOpen}
