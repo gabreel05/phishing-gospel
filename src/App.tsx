@@ -22,7 +22,7 @@ interface WelcomeModalProps {
 const data = loadEmails()
 
 export default function App() {
-  const [emails, _] = useState(data)
+  const [emails] = useState(data)
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [badModalIsOpen, setBadModalIsOpen] = useState(false)
   const [welcomeModalIsOpen, setWelcomeModalIsOpen] = useState(true)
@@ -37,7 +37,10 @@ export default function App() {
   }
 
   const openModal = () => {
-    const everyIsPhishing = isChecked.every(email => email.isPhishing)
+    const isPhishing = data.filter(email => email.isPhishing)
+    const everyIsPhishing =
+      isPhishing.length === isChecked.length &&
+      isChecked.every(email => email.isPhishing)
     everyIsPhishing ? setModalIsOpen(true) : setBadModalIsOpen(true)
   }
 
@@ -56,7 +59,7 @@ export default function App() {
   return (
     <div className="App">
       <HeaderContainer>
-        <h1>PHISHING</h1>
+        <h1>CAIXA DE ENTRADA</h1>
         <HeaderButton onClick={openModal}>Enviar</HeaderButton>
       </HeaderContainer>
       {emails.map((email, index) => (
@@ -76,8 +79,11 @@ export default function App() {
         closeModal={closeModal}
         content={
           <div>
-            Parabéns você descobriu todos os e-mails de Phishing! Aqui está sua
-            Flag: Teste
+            <h2 style={{ marginTop: '60px' }}>
+              Sua próxima pista está no local de comunhão familiar onde se
+              constroem memórias e vazios são preenchidos. Sua próxima pista
+              está sob a base de 4 pilares.
+            </h2>
           </div>
         }
       />
@@ -85,9 +91,25 @@ export default function App() {
         isOpen={badModalIsOpen}
         closeModal={closeBadModal}
         content={
-          <div>
-            <h1 style={{ marginBottom: '20px' }}>Errou filhão!</h1>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: '20px',
+            }}
+          >
+            <h1 style={{ marginBottom: '20px', textAlign: 'center' }}>
+              Errou!
+            </h1>
+            <h2 style={{ marginBottom: '20px', textAlign: 'center' }}>
+              Tente Novamente!
+            </h2>
             <img src="faustão.jpg" alt="Fausto Silva" width={180} />
+            <audio controls={false} autoPlay>
+              <source src="faustao-errou.mp3" type="audio/mp3"></source>
+            </audio>
           </div>
         }
       />
@@ -140,12 +162,13 @@ function WelcomeModal({ isOpen, closeModal }: WelcomeModalProps) {
           borderRadius: '8px',
           maxWidth: '400px',
           margin: 'auto',
+          maxHeight: '60vh',
         },
       }}
     >
       <ModalContainer>
         <ModalCloseButton onClick={closeModal}>X</ModalCloseButton>
-        <h3>
+        <h3 style={{ marginTop: '5px' }}>
           Bem vindo(a) ao <strong>Phishing Gospel</strong>!
         </h3>
         <p>
@@ -168,6 +191,12 @@ function WelcomeModal({ isOpen, closeModal }: WelcomeModalProps) {
         <p>
           Mas nossos e-mails são um pouco diferentes... Cuidado com aqueles que
           querem roubar não simplesmente seus dados, mas sua eternidade!
+        </p>{' '}
+        <br />
+        <p>
+          Lembre-se de selecionar apenas os e-mails de <strong>phishing</strong>{' '}
+          e clicar em
+          <strong> Enviar</strong>.
         </p>
       </ModalContainer>
     </ReactModal>
@@ -191,6 +220,7 @@ function Modal({ isOpen, closeModal, content }: ModalProps) {
           borderRadius: '8px',
           maxWidth: '400px',
           margin: 'auto',
+          maxHeight: '60vh',
         },
       }}
     >
@@ -219,6 +249,7 @@ function BadModal({ isOpen, closeModal, content }: ModalProps) {
           borderRadius: '8px',
           maxWidth: '400px',
           margin: 'auto',
+          maxHeight: '60vh',
         },
       }}
     >
@@ -299,7 +330,7 @@ const ModalContainer = styled.div`
   padding: 20px;
   max-width: 400px;
   margin: 0 auto;
-  text-align: center;
+  text-align: justify;
 `
 
 const ModalCloseButton = styled.button`
