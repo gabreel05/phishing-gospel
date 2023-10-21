@@ -70,6 +70,7 @@ export default function App() {
           handleCheckboxChange={() => handleCheckboxChange(email)}
         />
       ))}
+      6
       <WelcomeModal
         isOpen={welcomeModalIsOpen}
         closeModal={closeWelcomeModal}
