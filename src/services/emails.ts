@@ -4,7 +4,7 @@ export default function loadEmails() {
       id: 7,
       title: 'A liberdade para viver sem limites',
       author: 'Mestre da Autoindulgência',
-      body: 'Caro amigo, saiba que você tem a liberdade para viver sem limites, sem se preocupar com regras ou restrições. Basta crer e todas as portas se abrirão. Lembre-se do que está escrito: "Onde está o Espírito do Senhor, aí há liberdade." Heresias 4:22',
+      body: 'Caro amigo, saiba que você tem a liberdade para viver sem limites, sem se preocupar com regras ou restrições. Basta crer e todas as portas se abrirão. Lembre-se do que está escrito: "Onde está o Espírito do Senhor, aí há liberdade." 2 Coríntios 3:17',
       isPhishing: true,
     },
     {
@@ -18,14 +18,14 @@ export default function loadEmails() {
       id: 9,
       title: 'Despreze a humildade, busque a grandeza',
       author: 'Buscador de Glória',
-      body: 'Caro líder, não tema buscar a grandeza e a honra neste mundo. Despreze a humildade e alcance o topo. Lembre-se do que está escrito: "O homem de coração entendido adquire a sabedoria." Heresias 6:9',
+      body: 'Caro líder, não tema buscar a grandeza e a honra neste mundo. Despreze a humildade e alcance o topo. Lembre-se do que está escrito: "O homem de coração entendido adquire a sabedoria." Provérbios 18:15',
       isPhishing: true,
     },
     {
       id: 8,
       title: 'Conquiste o mundo com sua própria força',
       author: 'Campeão do Ego',
-      body: 'Prezado vencedor, a chave para conquistar o mundo está em sua própria força e capacidade. Basta crer em si mesmo e tudo será possível. Lembre-se do que está escrito: "Tudo é possível àquele que crê." Heresias 1:3',
+      body: 'Prezado vencedor, a chave para conquistar o mundo está em sua própria força e capacidade. Basta crer em si mesmo e tudo será possível. Lembre-se do que está escrito: "Tudo é possível àquele que crê." Marcos 9:23',
       isPhishing: true,
     },
     {
@@ -55,7 +55,7 @@ export default function loadEmails() {
       id: 10,
       title: 'A verdade oculta para o sucesso instantâneo',
       author: 'Guardião dos Segredos',
-      body: 'Prezado discípulo, a verdade oculta para o sucesso instantâneo está ao seu alcance. Basta crer e todas as portas se abrirão diante de você. Lembre-se do que está escrito: "Pedi, e dar-se-vos-á; buscai, e encontrareis." Heresias 3:15',
+      body: 'Prezado discípulo, a verdade oculta para o sucesso instantâneo está ao seu alcance. Basta crer e todas as portas se abrirão diante de você. Lembre-se do que está escrito: "Pedi, e dar-se-vos-á; buscai, e encontrareis." Mateus 7:7-8',
       isPhishing: true,
     },
     {
@@ -69,7 +69,7 @@ export default function loadEmails() {
       id: 6,
       title: 'Alcance a prosperidade instantânea',
       author: 'Ministério da Riqueza Fácil',
-      body: 'Prezado irmão, descubra como alcançar a prosperidade instantânea em sua vida. Basta crer e as portas da riqueza se abrirão diante de você. Lembre-se do que está escrito: "Pedi, e dar-se-vos-á; buscai, e encontrareis." Heresias 2:8',
+      body: 'Prezado irmão, descubra como alcançar a prosperidade instantânea em sua vida. Basta crer e as portas da riqueza se abrirão diante de você. Lembre-se do que está escrito: "Pedi, e dar-se-vos-á; buscai, e encontrareis." Mateus 7:7-8',
       isPhishing: true,
     },
   ]
